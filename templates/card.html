@@ -1,0 +1,33 @@
+<html>
+<head>
+	<link rel="stylesheet" href="/static/card.css"/>
+	</head>
+<body>
+<h1> SHUGO </h1>
+<table class="board">
+	<tr>
+		<th>S</th>
+		<th>H</th>
+		<th>U</th>
+		<th>G</th>
+		<th>O</th>
+	</tr>
+	{%for row in board %}
+	  <tr class="bingo-row">
+	  {%for cell in row %}
+	  <td class="bingo-cell" id="cell-{{cell.cell_id}}"> {{cell.name}}</td>
+	  {% endfor %}
+	</tr>
+	{% endfor %}
+
+</div>
+<script>
+
+board = {{board | safe}}
+</script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+
+<script type="text/javascript" src="/static/card.js"></script>
+</body>
+</html>
