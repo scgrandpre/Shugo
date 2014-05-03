@@ -3,15 +3,15 @@
 	<link rel="stylesheet" href="/static/card.css"/>
 	</head>
 <body>
-<h1> SHUGO </h1>
 <table class="board">
-	<tr>
+	<thead>
 		<th>S</th>
 		<th>H</th>
 		<th>U</th>
 		<th>G</th>
 		<th>O</th>
-	</tr>
+	</thead>
+	<tbody>
 	{%for row in board %}
 	  <tr class="bingo-row">
 	  {%for cell in row %}
@@ -19,8 +19,9 @@
 	  {% endfor %}
 	</tr>
 	{% endfor %}
+</tbody>
 
-</div>
+</table>
 <script>
 
 board = {{board | safe}}

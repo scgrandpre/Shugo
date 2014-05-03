@@ -1,3 +1,31 @@
 .checked {
-	background-color: green;
+	background-color: #d0d0d0;
+	font-weight: bold;
+	color: #003000;
+}
+
+.board {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.board tr {
+	height: 75px;
+	border: 1px solid black;
+}
+
+.board thead tr {
+	height: 75px;
+}
+
+.board th {
+	background-color: #990000;
+	color: white;
+	font-size:40px;
+}
+
+.board td {
+	text-align: center;
+	border: 1px solid black;
 }
