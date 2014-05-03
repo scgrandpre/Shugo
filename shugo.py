@@ -29,7 +29,7 @@ names_list = [
 "SHU Point 20",
 "SHU Win",
 ]
-cell_checked = {};
+globals = {"seed": random.randint(0, 10000), "cell_checked": {}};
 
 print ['G' + str(x) for x in range(61,76)]
 
@@ -40,7 +40,9 @@ def make_cells(names):
 def all_cells():
 	return make_cells(names_list + [str(x) for x in range(46, 76)])
 
-def generate_board():
+def generate_board(seed):
+	s = globals["seed"] + int(seed)
+	random.seed(s)
 	shuffled_list = make_cells(names_list)
 	random.shuffle(shuffled_list)
 
@@ -49,35 +51,37 @@ def generate_board():
 	Os = make_cells(str(x) for x in range(61, 76))
 	random.shuffle(Os)
 	
-
 	return [shuffled_list[x*3:x*3+3] + [Gs[x], Os[x]] for x in xrange(0,5)]
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 app = Flask(__name__)
 app.debug = True
 
 @app.route("/")
 def hello():
-	print generate_board()
-	return render_template('card.html', board=generate_board())
+	seed = request.cookies.get('seed', random.randint(0, 10000))
+	resp = make_response(render_template('card.html', board=generate_board(seed)))
+	resp.set_cookie('seed', str(seed))
+	return resp
 
 @app.route("/checked_cells")
 def checked_cells():
-	return jsonify(**cell_checked)
+	return jsonify(**globals["cell_checked"])
 
 @app.route("/admin")
 def admin():
-	return render_template('admin.html', cells=all_cells(), cells_checked=cell_checked)
+	return render_template('admin.html', cells=all_cells(), cells_checked=globals["cell_checked"])
 
 @app.route("/admin/clear", methods=['POST'])
-def clear(cell_id):
-	cell_checked = {}
-	return jsonify(**cell_checked)
+def clear():
+	globals["cell_checked"] = {}
+	globals["seed"] = random.randint(0,10000)
+	return jsonify(**globals["cell_checked"])
 
 @app.route("/admin/cell/<string:cell_id>", methods=['POST'])
 def toggle_cell(cell_id):
-	cell_checked[cell_id] = request.args.get("checked") != "false"
-	return jsonify(**cell_checked)
+	globals["cell_checked"][cell_id] = request.args.get("checked") != "false"
+	return jsonify(**globals["cell_checked"])
 
 
 if __name__ == "__main__":

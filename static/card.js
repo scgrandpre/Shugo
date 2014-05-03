@@ -1,4 +1,5 @@
 $(function() {
+	var hasCells = false;
 	var at = function(row, col) {
 		return board[row][col];
 	}
@@ -25,6 +26,13 @@ $(function() {
 	};
 	var poll = function() {
 		$.get("/checked_cells", function(cells) {
+			if (_.keys(cells).length == 0) {
+				if (hasCells) {
+					window.location.reload(true);
+				}
+			} else {
+				hasCells = true;
+			}
 			for (var cell_id in cells) {
 				$('#cell-' + cell_id).toggleClass('checked', cells[cell_id]);
 			}
