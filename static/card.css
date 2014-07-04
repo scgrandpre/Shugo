@@ -1,8 +1,15 @@
 .checked {
+	background-color:#ffa1a1;
+	font-weight: bold;
+	color: #003000;
+}
+
+.selected {
 	background-color: #d0d0d0;
 	font-weight: bold;
 	color: #003000;
 }
+
 
 .board {
 	width: 100%;

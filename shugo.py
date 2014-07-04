@@ -23,15 +23,34 @@ names_list = [
 "Block 1",
 "Block 2",
 "Block 3",
+"SHU Point 1",
+"SHU Point 2",
+"SHU Point 3",
+"SHU Point 4",
 "SHU Point 5",
+"SHU Point 6",
+"SHU Point 7",
+"SHU Point 8",
+"SHU Point 9",
 "SHU Point 10",
+"SHU Point 11",
+"SHU Point 12",
+"SHU Point 13",
+"SHU Point 14",
 "SHU Point 15",
+"SHU Point 16",
+"SHU Point 17",
+"SHU Point 18",
+"SHU Point 19",
 "SHU Point 20",
+"SHU Point 21",
+"SHU Point 22",
+"SHU Point 23",
+"SHU Point 24",
 "SHU Win",
 ]
 globals = {"seed": random.randint(0, 10000), "cell_checked": {}};
 
-print ['G' + str(x) for x in range(61,76)]
 
 
 def make_cells(names):
@@ -51,7 +70,7 @@ def generate_board(seed):
 	Os = make_cells(str(x) for x in range(61, 76))
 	random.shuffle(Os)
 	
-	return [shuffled_list[x*3:x*3+3] + [Gs[x], Os[x]] for x in xrange(0,5)]
+	return [shuffled_list[x*5:x*5+5] for x in xrange(0,5)]
 
 from flask import Flask, render_template, request, jsonify, make_response
 app = Flask(__name__)
