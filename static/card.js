@@ -24,6 +24,11 @@ $(function() {
 			console.log("you win!");
 		}
 	};
+
+ $( ".bingo-cell" ).click(function() {
+$(this).toggleClass('checked');
+});
+
 	var poll = function() {
 		$.get("/checked_cells", function(cells) {
 			if (_.keys(cells).length == 0) {
