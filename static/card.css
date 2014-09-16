@@ -32,10 +32,12 @@
 	background-color: #990000;
 	color: white;
 	font-size:40px;
+	font-weight: bold;
 }
 
 .board td {
 	text-align: center;
 	border: 1px solid black;
 	font-size: 23;
+	font-weight: bold;
 }
