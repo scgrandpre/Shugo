@@ -2,7 +2,7 @@
 	background-color:#ffa1a1;
 	font-weight: bold;
 	color: #003000;
-	font-size: 23;
+	font-size: 30;
 	font-family: "Comic Sans MS", cursive, sans-serif
 }
 
@@ -34,11 +34,13 @@
 	color: white;
 	font-size:40px;
 	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif
 }
 
 .board td {
 	text-align: center;
 	border: 1px solid black;
-	font-size: 23;
+	font-size: 30;
 	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif
 }
