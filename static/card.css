@@ -1,9 +1,22 @@
-.checked {
+.blink.checked {
 	background-color:#ffa1a1;
 	font-weight: bold;
 	color: #003000;
 	font-size: 30;
-	font-family: "Comic Sans MS", cursive, sans-serif
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	-webkit-animation: none;
+	-moz-animation: none;
+	animation: none;
+}
+
+@-webkit-keyframes blink { 0% { background-color:#ff5050; } }
+   @-moz-keyframes blink { 0% { background-color:#ff5050; } }
+        @keyframes blink { 0% { background-color:#ff5050; } }
+.blink {
+	background-color: #ffc0c0;
+	-webkit-animation: blink 1s 0s ease-in infinite alternate;
+	-moz-animation: blink 1s 0s ease-in infinite alternate;
+	animation: blink 1s 0s ease-in infinite alternate;
 }
 
 .selected {

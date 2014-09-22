@@ -1,48 +1,52 @@
 $(function() {
-	var hasCells = false;
 	var at = function(row, col) {
-		return board[row][col];
-	}
-	var check_victory = function(cells) {
+		return $($($('tbody').children()[row]).children()[col]).is('.checked');
+	};
+	var check_victory = function() {
 		finished = _.any([0,1,2,3,4], function(x) {
 			return _.all([0,1,2,3,4], function(y) {
-				return cells[at(x, y).cell_id];
+				return at(x, y);
 			}) || _.all([0,1,2,3,4], function(y) {
-				return cells[at(y, x).cell_id];
+				return at(y, x);
 			});
 		});
 
 		downDiagonal = _.all([0,1,2,3,4], function(x) {
-			return  cells[at(x, x).cell_id];
+			return  at(x, x);
 		});
 
 		upDiagonal = _.all([0,1,2,3,4], function(x) {
-			return  cells[at(x, 4 - x).cell_id];
+			return  at(x, 4 - x);
 		});
 
 		if (finished || downDiagonal || upDiagonal) {
-			console.log("you win!");
+			$.post("/win", function(res) {
+				if (res.won) {
+					alert("Congratulations! You got shugo!");
+				} else {
+					alert("So Close! But somebody else already got shugo.");
+				}
+			});
 		}
 	};
 
- $( ".bingo-cell" ).click(function() {
-$(this).toggleClass('checked');
-});
+	$('body').on('click', ".bingo-cell.blink", function() {
+		$(this).toggleClass('checked', true);
+		check_victory();
+	});
 
 	var poll = function() {
-		$.get("/checked_cells", function(cells) {
-			if (_.keys(cells).length == 0) {
-				if (hasCells) {
-					window.location.reload(true);
+		$.get("/checked_cells", function(data) {
+			if ($('.game_id').val() !== "" + data.game_id) {
+				window.location.reload(true);
+			} 
+			for (var cell_id in data.cells) {
+				$('#cell-' + cell_id).toggleClass('blink', data.cells[cell_id]);
+				if (!data.cells[cell_id]) {
+					$('#cell-' + cell_id).toggleClass('checked', false);
 				}
-			} else {
-				hasCells = true;
 			}
-			for (var cell_id in cells) {
-				$('#cell-' + cell_id).toggleClass('checked', cells[cell_id]);
-			}
-			check_victory(cells);
 		});
-	}
+	};
 	setInterval(poll, 1000);
 });

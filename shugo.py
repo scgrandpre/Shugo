@@ -1,5 +1,12 @@
 print "hello world"
 import random
+import os
+import urlparse
+import redis
+url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL', 'http://localhost:6379'))
+print url, url.hostname, url.port
+r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+
 
 names_list = [
 "1st Kill",
@@ -49,8 +56,7 @@ names_list = [
 "24th Point",
 "SHU Win",
 ]
-globals = {"seed": random.randint(0, 10000), "cell_checked": {}};
-
+globals = {"seed": random.randint(0, 10000), "cell_checked": {}, "won": False};
 
 
 def make_cells(names):
@@ -70,31 +76,60 @@ def generate_board(seed):
 	Os = make_cells(str(x) for x in range(61, 76))
 	random.shuffle(Os)
 	
-	return [shuffled_list[x*5:x*5+5] for x in xrange(0,5)]
+	board = [shuffled_list[x*5:x*5+5] for x in xrange(0,5)]
+	board[2][2] = {"cell_id": "free", "name": "FREE"}
+	return board
 
 from flask import Flask, render_template, request, jsonify, make_response
 app = Flask(__name__)
 app.debug = True
 
-@app.route("/")
-def hello():
+@app.route("/join/<string:game>")
+def join(game):
+	return render_template('join.html', game=game)
+
+@app.route("/play")
+def play():
+	game = request.args.get("game", "default game").replace(' ', '_')
+	name = request.args.get("name", "default name")
+
+	r.sadd("game:" + game, name)
+
 	seed = request.cookies.get('seed', random.randint(0, 10000))
-	resp = make_response(render_template('card.html', board=generate_board(seed)))
+	resp = make_response(render_template('card.html',
+		board=generate_board(seed), game_id=globals["seed"]))
 	resp.set_cookie('seed', str(seed))
 	return resp
 
+@app.route("/win", methods=['POST'])
+def win():
+	won = not globals["won"]
+	globals["won"] = True
+	return jsonify(won=won)
+
+
 @app.route("/checked_cells")
 def checked_cells():
-	return jsonify(**globals["cell_checked"])
+	return jsonify(game_id=globals["seed"], cells=globals["cell_checked"])
 
 @app.route("/admin")
 def admin():
 	return render_template('admin.html', cells=all_cells(), cells_checked=globals["cell_checked"])
 
+@app.route("/admin/newgame")
+def newgame():
+	return render_template('newgame.html')
+
+@app.route("/admin/newgame/<string:game_name>", methods=['POST'])
+def create_new_game(game_name):
+	print game_name
+	return render_template('newgame.html')
+
 @app.route("/admin/clear", methods=['POST'])
 def clear():
 	globals["cell_checked"] = {}
 	globals["seed"] = random.randint(0,10000)
+	globals["won"] = False
 	return jsonify(**globals["cell_checked"])
 
 @app.route("/admin/cell/<string:cell_id>", methods=['POST'])
@@ -102,6 +137,11 @@ def toggle_cell(cell_id):
 	globals["cell_checked"][cell_id] = request.args.get("checked") != "false"
 	return jsonify(**globals["cell_checked"])
 
+@app.route("/admin/games")
+def admin_games():
+	return make_response(
+			"<br>".join(game[len("game:"):] + ": " + ", ".join(r.smembers(game)) 
+				for game in r.keys("game:*")))
 
 if __name__ == "__main__":
     app.run()
