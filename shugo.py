@@ -56,7 +56,7 @@ names_list = [
 "24th Point",
 "SHU Win",
 ]
-globals = {"seed": random.randint(0, 10000), "cell_checked": {}, "won": False};
+globals = {"seed": random.randint(0, 10000), "cell_checked": {}, "won": False, "current_game": "unnamed"};
 
 
 def make_cells(names):
@@ -83,6 +83,10 @@ def generate_board(seed):
 from flask import Flask, render_template, request, jsonify, make_response
 app = Flask(__name__)
 app.debug = True
+
+@app.route("/join")
+def join_default():
+	return render_template('join.html', game=globals["current_game"])
 
 @app.route("/join/<string:game>")
 def join(game):
@@ -114,7 +118,7 @@ def checked_cells():
 
 @app.route("/admin")
 def admin():
-	return render_template('admin.html', cells=all_cells(), cells_checked=globals["cell_checked"])
+	return render_template('admin.html', cells=all_cells(), cells_checked=globals["cell_checked"], game=globals["current_game"])
 
 @app.route("/admin/newgame")
 def newgame():
@@ -136,6 +140,11 @@ def clear():
 def toggle_cell(cell_id):
 	globals["cell_checked"][cell_id] = request.args.get("checked") != "false"
 	return jsonify(**globals["cell_checked"])
+
+@app.route("/admin/set_game/<string:game_name>", methods=['POST'])
+def name_game(game_name):
+	globals["current_game"] = game_name
+	return jsonify(ok=True)
 
 @app.route("/admin/games")
 def admin_games():

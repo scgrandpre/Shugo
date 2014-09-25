@@ -1,12 +1,17 @@
 <html>
 <body>
 <h1> SHUGO </h1>
-	{%for cell in cells %}
-<div class="cell">
-  <input type="checkbox" id="{{cell.cell_id}}" {%if cells_checked[cell.cell_id] %}checked{% endif %}>
-  <label for="{{cell.cell_id}}">{{cell.name}}</label>
+
+<div>
+	<input type="text" value="{{game}}" class="game-name"/>
+<button class="set-game">Set Game Name</button>
 </div>
-	{% endfor %}
+{%for cell in cells %}
+<div class="cell">
+	<input type="checkbox" class="checkbox" id="{{cell.cell_id}}" {%if cells_checked[cell.cell_id] %}checked{% endif %}>
+	<label for="{{cell.cell_id}}">{{cell.name}}</label>
+</div>
+{% endfor %}
 <button class="clear">Clear All</button>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
