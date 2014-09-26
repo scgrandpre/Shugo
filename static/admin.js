@@ -4,13 +4,13 @@ $(function() {
 		$.post("/admin/cell/" + $e.attr('id') + "?checked=" + $e.is(":checked"));
 	});
 
-	$('.set-game').click(function() {
+	$('.set-game').bind("click touchstart", function(){
 		name = $('.game-name').val();
 		$.post("/admin/set_game/" + name);
 	});
 
 
-	$('.clear').click(function() {
+	$('.clear')..bind("click touchstart", function(){
 		$('input').attr('checked', false);
 		$.post("/admin/clear");
 	});

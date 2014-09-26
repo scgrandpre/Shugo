@@ -29,8 +29,8 @@ $(function() {
 			});
 		}
 	};
-
-	$('body').on('click', ".bingo-cell.blink", function() {
+	
+	$('body').on('click touchstart', ".bingo-cell.blink", function() {
 		$(this).toggleClass('checked', true);
 		check_victory();
 	});
