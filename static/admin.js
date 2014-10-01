@@ -10,7 +10,7 @@ $(function() {
 	});
 
 
-	$('.clear')..bind("click touchstart", function(){
+	$('.clear').bind("click touchstart", function(){
 		$('input').attr('checked', false);
 		$.post("/admin/clear");
 	});
