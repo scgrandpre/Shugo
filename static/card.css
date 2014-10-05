@@ -32,6 +32,9 @@
 	table-layout: fixed;
 	border-collapse: collapse;
 	background-image: url("shuBingo.png");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .board tr {
