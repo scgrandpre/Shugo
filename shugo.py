@@ -9,10 +9,10 @@ r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 
 names_list = [
-"K1",
-"K2",
-"K3",
-"K4",
+"1st Kill",
+"2nd Kill",
+"3rd Kill",
+"5th Kill",
 "7th Kill",
 "9th Kill",
 "10th Kill",
