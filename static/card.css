@@ -50,7 +50,7 @@
 	background-color: #990000;
 	
 	color: white;
-	font-size:40px;
+	font-size:50;
 	font-weight: bold;
 	font-family: "Times New Roman", cursive, sans-serif
 }
@@ -58,7 +58,7 @@
 .board td {
 	text-align: center;
 	border: 1px solid black;
-	font-size: 30;
+	font-size: 50;
 	font-weight: bold;
 	font-family: "Times New Roman", cursive, sans-serif
 }
