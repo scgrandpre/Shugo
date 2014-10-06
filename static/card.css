@@ -7,6 +7,10 @@
 	-webkit-animation: none;
 	-moz-animation: none;
 	animation: none;
+	background-image: url("smallCells.png");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 @-webkit-keyframes blink { 0% { background-color:#ff5050; } }
