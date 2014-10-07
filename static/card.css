@@ -19,7 +19,7 @@
    @-moz-keyframes blink { 0% { background-color:#ff5050; } }
         @keyframes blink { 0% { background-color:#ff5050; } }
 .blink {
-	background-color: #ffc0c0;
+	background-color: #990000;
 	-webkit-animation: blink 1s 0s ease-in infinite alternate;
 	-moz-animation: blink 1s 0s ease-in infinite alternate;
 	animation: blink 1s 0s ease-in infinite alternate;
