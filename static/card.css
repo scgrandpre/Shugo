@@ -11,7 +11,8 @@
 	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
-    background-size: cover;
+    background-size: 50%;
+
 }
 
 @-webkit-keyframes blink { 0% { background-color:#ff5050; } }
