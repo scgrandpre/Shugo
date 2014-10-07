@@ -22,7 +22,7 @@ $(function() {
 		if (finished || downDiagonal || upDiagonal) {
 			$.post("/win", function(res) {
 				if (res.won) {
-					alert("Congratulations! You got shugo!  Please do not close this message until you collect your prize!");
+					alert("Congratulations! You got SHUGO!  Please do not close this message until you collect your prize!");
 				} else {
 					alert("So Close! But somebody else already got shugo.");
 				}
