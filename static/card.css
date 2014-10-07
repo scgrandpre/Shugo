@@ -1,7 +1,6 @@
 .blink.checked {
-	background-color:#ffa1a1;
+	background-color:#800000;
 	font-weight: bold;
-	
 	font-size: 50;
 	font-family: "Times New Roman", cursive, sans-serif;
 	-webkit-animation: none;
